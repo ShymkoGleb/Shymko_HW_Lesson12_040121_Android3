@@ -1,11 +1,14 @@
 package com.example.shymko_hw_lesson12_040121_android3
 
-import android.content.DialogInterface
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.shymko_hw_lesson12_040121_android3.databinding.ActivityMainBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+
 
 /*
 Самостійно зробити проект, у якому буде чотири кнопки:
@@ -16,7 +19,15 @@ import com.example.shymko_hw_lesson12_040121_android3.databinding.ActivityMainBi
 Показ BottomSheet як наслідника BottomSheetDialogFragment
 */
 
+
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+ /*   private val bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout> by lazy {
+        BottomSheetBehavior.from(
+                binding.root.BottomSheetSimple
+        )
+    }*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
@@ -25,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private lateinit var binding: ActivityMainBinding
 
     private fun setupBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -42,7 +52,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnPageWithBottomSheet1.setOnClickListener {
-            FirstButtomSheetActivity.start(this)
+         //   showBottomSheetFragment()
+            val dialog = BottomSheetDialog(this)
+            val view = layoutInflater.inflate(R.layout.buttom_sheet_simpe_xml_example, null)
+            dialog.setContentView(view)
+            dialog.show()
+
         }
     }
 
@@ -52,19 +67,21 @@ class MainActivity : AppCompatActivity() {
         addAlertDialog.setTitle("Customer Title")
                 .setMessage("Custom message")
                 .setIcon(R.drawable.ic_baseline_two_wheeler_24)
-                .setPositiveButton("Positive btn"){ dialog, which ->
+                .setPositiveButton("Positive btn") { dialog, which ->
                 }
-                .setNegativeButton("Negative btn"){ dialog, which ->
+                .setNegativeButton("Negative btn") { dialog, which ->
                 }
                 .show()
     }
 
-    private fun showCustomDialogFragment(){
+    private fun showCustomDialogFragment() {
         supportFragmentManager.beginTransaction()
                 .add(CustomDialogFragment(), "TAG")
                 .commitAllowingStateLoss()
-
     }
 
+    /*private fun showBottomSheetFragment() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }*/
 
 }

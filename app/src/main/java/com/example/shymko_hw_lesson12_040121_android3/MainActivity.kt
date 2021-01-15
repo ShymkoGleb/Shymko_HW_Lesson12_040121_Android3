@@ -4,11 +4,8 @@ package com.example.shymko_hw_lesson12_040121_android3
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.shymko_hw_lesson12_040121_android3.databinding.ActivityMainBinding
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-
 
 /*
 Самостійно зробити проект, у якому буде чотири кнопки:
@@ -22,20 +19,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
- /*   private val bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout> by lazy {
-        BottomSheetBehavior.from(
-                binding.root.BottomSheetSimple
-        )
-    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
         setupBinding()
         setupOnClickListeners()
-
     }
-
 
     private fun setupBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -51,16 +40,17 @@ class MainActivity : AppCompatActivity() {
             showCustomDialogFragment()
         }
 
-        binding.btnPageWithBottomSheet1.setOnClickListener {
-         //   showBottomSheetFragment()
-            val dialog = BottomSheetDialog(this)
-            val view = layoutInflater.inflate(R.layout.buttom_sheet_simpe_xml_example, null)
-            dialog.setContentView(view)
-            dialog.show()
-
+        binding.btnBottomSheet.setOnClickListener {
+            showBottomSheetFragment()
         }
-    }
 
+        binding.btnBottomSheetDialogFragment.setOnClickListener {
+            showCustomButtomSheetDialogFragment()
+        }
+
+
+
+    }
 
     private fun setupDialogs() {
         val addAlertDialog = AlertDialog.Builder(this)
@@ -80,8 +70,17 @@ class MainActivity : AppCompatActivity() {
                 .commitAllowingStateLoss()
     }
 
-    /*private fun showBottomSheetFragment() {
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-    }*/
+    private fun showBottomSheetFragment() {
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.buttom_sheet_simpe_xml_example, null)
+        dialog.setContentView(view)
+        dialog.show()
+    }
+
+    private fun showCustomButtomSheetDialogFragment() {
+        supportFragmentManager.beginTransaction()
+                .add(CustomBottomSheetDialogFragment(), "TAG")
+                .commitAllowingStateLoss()
+    }
 
 }
